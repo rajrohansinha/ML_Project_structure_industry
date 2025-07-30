@@ -1,0 +1,61 @@
+# =========================
+# Core Data Science & ML
+# =========================
+pandas
+numpy
+scipy
+matplotlib
+seaborn
+scikit-learn
+statsmodels
+xgboost
+lightgbm
+catboost
+
+# =========================
+# Deep Learning
+# =========================
+tensorflow
+keras
+torch
+torchvision
+torchaudio
+
+# =========================
+# Model Deployment & API
+# =========================
+Flask
+fastapi
+uvicorn
+gunicorn
+
+# =========================
+# Data Processing & Utilities
+# =========================
+jupyter
+notebook
+ipywidgets
+joblib
+dill
+
+# =========================
+# Visualization & Dashboards
+# =========================
+plotly
+dash
+bokeh
+
+# =========================
+# Experiment Tracking & Tuning
+# =========================
+mlflow
+optuna
+
+# =========================
+# Helpful Tools
+# =========================
+python-dotenv
+tqdm
+requests
+
+#-e .
