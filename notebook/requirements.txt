@@ -1,0 +1,40 @@
+# =========================
+# Core Data Science
+# =========================
+numpy
+pandas
+scikit-learn
+scipy
+matplotlib
+seaborn
+
+# =========================
+# Feature Engineering & Boosting
+# =========================
+xgboost
+lightgbm
+catboost
+
+# =========================
+# Deep Learning
+# =========================
+tensorflow==2.10.1    # last version for Python 3.8
+keras==2.10.0
+torch==1.13.1
+torchvision==0.14.1
+torchaudio==0.13.1
+
+# =========================
+# Data Utilities
+# =========================
+joblib
+dill
+tqdm
+requests
+python-dotenv
+
+# =========================
+# Visualization (Optional)
+# =========================
+plotly
+dash
