@@ -335,93 +335,49 @@ Open in browser: `http://127.0.0.1:5000/`
 ------------------------GIT STEPS AFTER WRITING A NEW PIPELINE (e.g., model_trainer.py)-----------------------------------------
 
 1️⃣ Stage all changes (new file, edits, etc.) : git add .
-2️⃣ Commit the changes with a clear message : git commit -m "Added model training pipeline with hyperparameter tuning"
+2️⃣ Commit the changes with a clear message : git commit -m "---------"
 3️⃣ (Optional) Check status to see what’s pending / ahead : git status    
 4️⃣ Push changes to GitHub (first push uses -u to set upstream) : git push -u origin main
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* __init__.py
-* train_pipeline.py
------------------------------------------------------------------------------------------------------------------------------
+------------------------------Code structure-------------------------------------------------------------------------------
 ML_Project_Industrial/
 │
-├── venv/                          # Virtual environment (ignored by Git)
-├── logs/                          # Auto-created folder for logs
+├── venv/                          # ✅ Virtual environment (ignored by Git)
+│
+├── logs/                          # ✅ Folder for logs
 │   └── 07_31_2025_12_55_26.log    # Example log file
 │
-├── src/                           # Main source code
+├── artifacts/                     # ✅ Stores trained model + preprocessor
+│   ├── model.pkl
+│   └── preprocessor.pkl
+│
+├── src/                           # ✅ Core ML source code
 │   ├── __init__.py
 │   ├── logger.py
 │   ├── exception.py
 │   ├── utils.py
 │   │
-│   ├── components/
+│   ├── components/                # ✅ Handles ML pipeline components
 │   │   ├── __init__.py
-│   │   ├── data_ingestion.py
-│   │   ├── data_transformation.py
-│   │   ├── model_trainer.py
+│   │   ├── data_ingestion.py      # Reads raw data
+│   │   ├── data_transformation.py # Prepares data for training
+│   │   ├── model_trainer.py       # Trains & saves model.pkl + preprocessor.pkl
 │   │
-│   └── pipeline/
+│   └── pipeline/                  
 │       ├── __init__.py
-│       └── train_pipeline.py
+│       ├── train_pipeline.py      # Runs end-to-end training
+│       └── predict_pipeline.py    # ✅ NEW → Converts form data into DF & predicts
 │
-├── Steps to follow to setup ML code
-├── requirements.txt
-├── setup.py
-├── .gitignore
-└── README.md
+├── templates/                     # ✅ NEW → Flask HTML Templates Folder
+│   ├── index.html                 # Homepage (Welcome page)
+│   └── home.html                  # Prediction form with dropdowns & input boxes
+│
+├── static/                        # (Optional for CSS/JS/Images if needed later)
+│
+├── Prediction_application.py      # ✅ NEW → Flask app entry point
+│
+├── Steps to follow to setup ML code   # ✅ Your step-by-step setup notes
+├── requirements.txt               # Python dependencies (Flask, sklearn, etc.)
+├── setup.py                       # Package setup if needed for pip install
+├── .gitignore                     # Ignore venv, artifacts, logs, etc.
+└── README.md                      # High-level project explanation
