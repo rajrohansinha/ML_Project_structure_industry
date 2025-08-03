@@ -1,0 +1,8 @@
+[ 2025-08-03 12:24:14,486 ] 81 root - INFO - Starting the data ingestion pipeline.
+[ 2025-08-03 12:24:14,486 ] 32 root - INFO - Entered the data ingestion method.
+[ 2025-08-03 12:24:14,488 ] 38 root - INFO - Reading dataset from: notebook/data/stud.csv
+[ 2025-08-03 12:24:14,500 ] 42 root - INFO - Dataset read successfully with shape (1000, 8)
+[ 2025-08-03 12:24:14,500 ] 47 root - INFO - Artifacts directory created.
+[ 2025-08-03 12:24:14,508 ] 51 root - INFO - Raw data saved at: artifacts\data.csv
+[ 2025-08-03 12:24:14,508 ] 55 root - INFO - Performing train-test split...
+[ 2025-08-03 12:24:14,521 ] 62 root - INFO - Train and test datasets saved.

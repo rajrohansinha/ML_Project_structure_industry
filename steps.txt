@@ -1,0 +1,248 @@
+-------------------------------### 🌐 **1️⃣ **Open Anaconda Prompt**
+
+2️⃣ **Navigate to your project folder**
+Use `cd` to move to your project location:
+
+```bash
+cd C:\Users\rroha\OneDrive\Desktop\Raj\ML_Project_Industrial
+```
+
+3️⃣ **Create a virtual environment**
+
+```bash
+conda create -p venv python==3.8 -y
+```
+
+4️⃣ **Activate the environment**
+
+```bash
+conda activate venv/
+```
+
+----------------------------------### 🌐 **2️⃣ Setup GitHub Repository (VS Code Terminal)**
+
+1️⃣ Initialize Git
+
+git init
+
+2️⃣ Set main branch to `main`
+
+git branch -M main
+
+3️⃣ Link local project to GitHub
+
+git remote add origin https://github.com/rajrohansinha/ML_Project_structure_industry.git
+
+4️⃣ Verify remote link
+
+git remote -v
+
+5️⃣ Push your code to GitHub
+
+git push -u origin main
+
+6️⃣ Pull (sync) from GitHub
+
+git pull
+
+----------------------------------### 🏗 **3️⃣ Create Project Skeleton**
+
+📂 **Key files and folders created:**
+
+* `README.md` → Project description & setup guide.
+* `requirements.txt` → List of Python libraries needed.
+* `setup.py` → Packaging instructions for the project.
+* `.gitignore` → Ignores unnecessary files (e.g., `venv/`, `__pycache__/`).
+* `src/` → Main source code folder.
+
+  * `__init__.py` → Marks folder as a Python package.
+
+----------------------------------### 📦 **4️⃣ Setup `setup.py` for packaging**
+
+This allows your project to be installed as a package.
+
+```python
+from setuptools import find_packages, setup
+from typing import List
+
+HYPEN_E_DOT='-e .'
+def get_requirements(file_path:str)->List[str]:
+    '''
+    this function will return the list of requirements
+    '''
+    requirements=[]
+    with open(file_path) as file_obj:
+        requirements=file_obj.readlines()
+        requirements=[req.replace("\n","") for req in requirements]
+
+        if HYPEN_E_DOT in requirements:
+            requirements.remove(HYPEN_E_DOT)
+    return requirements
+
+setup(
+    name='ml_project_industrial',
+    version='0.0.1',
+    author='Rohan',
+    author_email='r.rohan921998@gmail.com',
+    packages=find_packages(),
+    install_requires=get_requirements('requirements.txt')
+)
+
+
+----------------------------------### 📜 **5️⃣ Add `requirements.txt`**
+
+* Add all libraries your project needs (like pandas, numpy, scikit-learn).
+* Install with:
+
+pip install -r requirements.txt
+
+----------------------------------### 🚫 **6️⃣ Add `.gitignore`**
+
+Keeps the repo clean by ignoring files that don’t need to be tracked.
+
+# Virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# VS Code settings
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
+
+----------------------------------### 🔄 **7️⃣ Stage, Commit & Push**
+
+* `git status` → Check changes
+* `git add .` → Stage all files
+* `git commit -m "setup"` → Save your work
+* `git push -u origin main` → Upload to GitHub
+
+✅ **Stage 1 – Code Added Inside `src/`**
+
+📂 Inside **src/:**
+
+* ✅ `__init__.py` → Marks `src` as a package.
+* ✅ `logger.py` → Logging setup.
+
+  * Creates `logs/` folder automatically.
+  * Generates timestamped log files.
+
+import logging, os
+from datetime import datetime
+LOG_FILE = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
+logs_path = os.path.join(os.getcwd(), "logs")
+os.makedirs(logs_path, exist_ok=True)
+LOG_FILE_PATH = os.path.join(logs_path, LOG_FILE)
+logging.basicConfig(
+    filename=LOG_FILE_PATH,
+    format="[ %(asctime)s ] %(lineno)d %(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO,
+)
+if __name__ == "__main__":
+    logging.info("Logging has started successfully.")
+
+To run the above code : python src/logger.py
+
+✔ A new log file is created inside `logs/`.
+
+✅ `exception.py` → Custom exception handler.
+
+  * Shows **file name, line number, and error message**.
+
+import sys
+from src.logger import logging
+
+def error_message_detail(error, error_detail: sys):
+    _, _, exc_tb = error_detail.exc_info()
+    file_name = exc_tb.tb_frame.f_code.co_filename
+    error_message = "Error occured in python script name [{0}] line number [{1}] error message[{2}]".format(
+        file_name, exc_tb.tb_lineno, str(error)
+    )
+    return error_message
+
+class CustomException(Exception):
+    def __init__(self, error_message, error_detail: sys):
+        super().__init__(error_message)
+        self.error_message = error_message_detail(error_message, error_detail=error_detail)
+    
+    def __str__(self):
+        return self.error_message
+
+* ✅ `utils.py` 
+
+📂 **components/**
+
+* `__init__.py
+* `data_ingestion.py
+* `data_transformation.py
+* `model_trainer.py
+
+📂 **pipeline/**
+
+* __init__.py
+* train_pipeline.py
+-----------------------------------------------------------------------------------------------------------------------------
+ML_Project_Industrial/
+│
+├── venv/                          # Virtual environment (ignored by Git)
+├── logs/                          # Auto-created folder for logs
+│   └── 07_31_2025_12_55_26.log    # Example log file
+│
+├── src/                           # Main source code
+│   ├── __init__.py
+│   ├── logger.py
+│   ├── exception.py
+│   ├── utils.py
+│   │
+│   ├── components/
+│   │   ├── __init__.py
+│   │   ├── data_ingestion.py
+│   │   ├── data_transformation.py
+│   │   ├── model_trainer.py
+│   │
+│   └── pipeline/
+│       ├── __init__.py
+│       └── train_pipeline.py
+│
+├── Steps to follow to setup ML code
+├── requirements.txt
+├── setup.py
+├── .gitignore
+└── README.md
+---------------------------------------------------------------------------------------------------
+<<------------data_ingestion.py---------->>
+
+Within my ML_Project_Industrial folder, I created a structured pipeline under the src directory. Inside src/components/, 
+I wrote the data_ingestion.py file using the code provided. This script was executed using the command:
+
+python -m src.components.data_ingestion
+Running this successfully:
+
+✅ Created an artifacts/ folder automatically
+✅ Saved three files inside: data.csv (raw data), train.csv (80% training data), and test.csv (20% testing data)
+✅ Generated a logs/ folder where all pipeline logs are stored (useful for debugging & tracking runs)
+
+# • JUPYTER NOTEBOOKS are great for:
+  - Quick experiments, EDA, and visualizations
+   - Fast tweaking of code and sharing insights
+   - BUT they are not ideal for production, automation, or clean structure
+
+# • PYTHON SCRIPTS & PIPELINES (like data_ingestion.py):
+   - Make the project modular & reusable
+   - Run with one command: python -m src.components.data_ingestion
+   - Auto-create folders (artifacts/, logs/) to store outputs & track runs
+   - Easier to version control (Git), deploy, and automate (CI/CD)
+   - Form the foundation for adding steps (data_transformation.py, model_trainer.py)
+
+# • WHY THIS MATTERS:
+   - Moves the project from “notebook experiments” to a clean, production-ready structure
+   - Supports scaling, automation, and collaboration
+
+Jupyter notebooks = for exploration & learning
+Python modules like data_ingestion.py = for scaling, automation, and production readiness
+This shift means I’m not just “running ML experiments,” I’m building a real ML system that could run in an actual industrial setting.   

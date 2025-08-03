@@ -15,9 +15,9 @@ catboost
 # =========================
 # Deep Learning
 # =========================
-tensorflow
-keras
-torch
+tensorflow==2.10.1      # stable for Python 3.8
+keras==2.10.0
+torch==2.0.1
 torchvision
 torchaudio
 
@@ -32,18 +32,13 @@ gunicorn
 # =========================
 # Data Processing & Utilities
 # =========================
-jupyter
-notebook
-ipywidgets
 joblib
 dill
 
 # =========================
-# Visualization & Dashboards
+# Visualization
 # =========================
 plotly
-dash
-bokeh
 
 # =========================
 # Experiment Tracking & Tuning
@@ -58,4 +53,7 @@ python-dotenv
 tqdm
 requests
 
-#-e .
+# =========================
+# Developer Mode (optional)
+# =========================
+# -e .   # Uncomment ONLY if you want editable install for your local package
