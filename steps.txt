@@ -184,36 +184,6 @@ class CustomException(Exception):
 
 📂 **pipeline/**
 
-* __init__.py
-* train_pipeline.py
------------------------------------------------------------------------------------------------------------------------------
-ML_Project_Industrial/
-│
-├── venv/                          # Virtual environment (ignored by Git)
-├── logs/                          # Auto-created folder for logs
-│   └── 07_31_2025_12_55_26.log    # Example log file
-│
-├── src/                           # Main source code
-│   ├── __init__.py
-│   ├── logger.py
-│   ├── exception.py
-│   ├── utils.py
-│   │
-│   ├── components/
-│   │   ├── __init__.py
-│   │   ├── data_ingestion.py
-│   │   ├── data_transformation.py
-│   │   ├── model_trainer.py
-│   │
-│   └── pipeline/
-│       ├── __init__.py
-│       └── train_pipeline.py
-│
-├── Steps to follow to setup ML code
-├── requirements.txt
-├── setup.py
-├── .gitignore
-└── README.md
 <<------------data_ingestion.py---------->>
 
 Within my ML_Project_Industrial folder, I created a structured pipeline under the src directory. Inside src/components/, 
@@ -291,9 +261,167 @@ This shift means I’m not just “running ML experiments,” I’m building a r
 >>>>>>>>>>>>>>>>>>>>>>>>>>> python -m src.components.model_trainer
 Running this successfully:
 
-GIT STEPS AFTER WRITING A NEW PIPELINE (e.g., model_trainer.py)
+<<------------model_trainer.py RUN OUTPUT SUMMARY---------->>
+
+✅ Data Ingestion:
+    • Successfully loaded dataset from notebook/data/stud.csv (1000 rows, 8 columns)
+    • Saved raw dataset to artifacts/data.csv
+    • Performed train-test split → Train: (800, 8), Test: (200, 8)
+    • Saved train.csv & test.csv into artifacts/
+
+✅ Data Transformation:
+    • Loaded train.csv & test.csv
+    • Identified columns:
+        - Categorical: gender, race_ethnicity, parental_level_of_education, lunch, test_preparation_course
+        - Numerical: writing_score, reading_score
+    • Applied preprocessing pipeline (imputation, encoding, scaling)
+    • Saved preprocessing object as artifacts/preprocessor.pkl
+    • Returned transformed arrays → Train: (800, 20), Test: (200, 20)
+
+✅ Model Training:
+    • Split transformed arrays into X_train, y_train, X_test, y_test
+    • Evaluated multiple models with GridSearchCV:
+        - RandomForestRegressor
+        - DecisionTreeRegressor
+        - GradientBoostingRegressor
+        - LinearRegression
+        - XGBRegressor
+        - CatBoostRegressor
+        - AdaBoostRegressor
+    • Compared R² scores across models
+
+🏆 Best Model Selected:
+    • **Linear Regression**
+    • **R² Score: 0.8775** (Excellent performance)
+
+💾 Model Saving:
+    • Saved final trained model as artifacts/model.pkl
+
+🎯 **Final Result:**
+✅ End-to-end ML pipeline ran successfully (Ingestion → Transformation → Training)
+✅ Best model (Linear Regression) stored for deployment
+✅ Final R² Score: **0.8775**
+
+-----------------------------------------predict\_pipeline.py-------------------------------------------------------------------------
+
+Why first?** Because your Flask app will depend on it to predict. If you don’t have this ready, the app can’t “think.”
+Create `src/pipeline/predict_pipeline.py`.
+Add:
+    * `CustomData` → converts HTML form inputs into a Pandas DataFrame.
+    * `PredictPipeline` → loads `model.pkl` & `preprocessor.pkl` from `artifacts/`, transforms the data, and predicts.
+You now have an ML “engine room” ready.
+
+-------------------------Build the Flask App File (Prediction\_application.py)----------------------------------------------------------
+
+Once the ML engine is ready, you can wire up Flask to serve predictions.
+
+Create `Prediction_application.py`.
+Add:
+    * `index()` route → Shows `index.html`.
+    * `predict_datapoint()` route → Shows `home.html` (GET) & handles prediction (POST).
+Your backend (Flask server) is set up but won’t show anything until HTML templates exist.
+
+-----------------------------------Create the Templates (HTML files)------------------------------------------------------
+
+Make a folder named `templates/`.
+Inside it:
+    * `index.html` → Simple welcome page + “Go to Prediction” button.
+    * `home.html` → Beautiful form with **dropdowns** (gender, lunch, etc.), number boxes (scores), and **Predict** button.
+Your web app has a front‑end and will display predictions.
+
+Run Flask app: python Prediction_application.py
+Open in browser: `http://127.0.0.1:5000/`
+
+------------------------GIT STEPS AFTER WRITING A NEW PIPELINE (e.g., model_trainer.py)-----------------------------------------
 
 1️⃣ Stage all changes (new file, edits, etc.) : git add .
 2️⃣ Commit the changes with a clear message : git commit -m "Added model training pipeline with hyperparameter tuning"
 3️⃣ (Optional) Check status to see what’s pending / ahead : git status    
 4️⃣ Push changes to GitHub (first push uses -u to set upstream) : git push -u origin main
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* __init__.py
+* train_pipeline.py
+-----------------------------------------------------------------------------------------------------------------------------
+ML_Project_Industrial/
+│
+├── venv/                          # Virtual environment (ignored by Git)
+├── logs/                          # Auto-created folder for logs
+│   └── 07_31_2025_12_55_26.log    # Example log file
+│
+├── src/                           # Main source code
+│   ├── __init__.py
+│   ├── logger.py
+│   ├── exception.py
+│   ├── utils.py
+│   │
+│   ├── components/
+│   │   ├── __init__.py
+│   │   ├── data_ingestion.py
+│   │   ├── data_transformation.py
+│   │   ├── model_trainer.py
+│   │
+│   └── pipeline/
+│       ├── __init__.py
+│       └── train_pipeline.py
+│
+├── Steps to follow to setup ML code
+├── requirements.txt
+├── setup.py
+├── .gitignore
+└── README.md
