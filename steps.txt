@@ -214,13 +214,12 @@ ML_Project_Industrial/
 ├── setup.py
 ├── .gitignore
 └── README.md
----------------------------------------------------------------------------------------------------
 <<------------data_ingestion.py---------->>
 
 Within my ML_Project_Industrial folder, I created a structured pipeline under the src directory. Inside src/components/, 
 I wrote the data_ingestion.py file using the code provided. This script was executed using the command:
 
-python -m src.components.data_ingestion
+>>>>>>>>>>>>>>>>>>>>>>>>>>> python -m src.components.data_ingestion
 Running this successfully:
 
 ✅ Created an artifacts/ folder automatically
@@ -245,4 +244,56 @@ Running this successfully:
 
 Jupyter notebooks = for exploration & learning
 Python modules like data_ingestion.py = for scaling, automation, and production readiness
-This shift means I’m not just “running ML experiments,” I’m building a real ML system that could run in an actual industrial setting.   
+This shift means I’m not just “running ML experiments,” I’m building a real ML system that could run in an actual industrial setting.  
+
+<<------------data_transformation.py---------->>
+
+✅ Read the train.csv & test.csv files created earlier by data_ingestion.py
+✅ Built a preprocessing pipeline using Scikit-learn Pipelines & ColumnTransformer
+    • Numerical features → Missing values filled with median, scaled using StandardScaler
+    • Categorical features → Missing values filled with most frequent, one-hot encoded, scaled
+✅ Saved the preprocessing object as preprocessor.pkl inside the artifacts/ folder (so we can reuse it later in training or deployment)
+✅ Returned transformed NumPy arrays for train & test data (ready for feeding into ML models)
+
+📌 Why is this step important?
+✅ Ensures data is cleaned, encoded & standardized before training (consistent for all future data)
+✅ Preprocessor object (preprocessor.pkl) means we don’t need to repeat all steps manually again — load it anywhere (model training, deployment)
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>> python -m src.components.data_transformation
+
+<<------------model_trainer.py---------->>
+
+✅ Read transformed train & test NumPy arrays from data_transformation.py
+✅ Split arrays into features (X) and target (y) for training & testing
+✅ Defined a dictionary of ML models to evaluate:
+    • RandomForestRegressor
+    • DecisionTreeRegressor
+    • GradientBoostingRegressor
+    • LinearRegression
+    • XGBRegressor (XGBoost)
+    • CatBoostRegressor (CatBoost)
+    • AdaBoostRegressor
+✅ Created a hyperparameter grid for each model (where applicable)
+✅ Called evaluate_models() to:
+    • Run GridSearchCV on all models
+    • Find best hyperparameters
+    • Return performance report (R² scores)
+✅ Selected the BEST model based on R² score
+✅ Checked if best model is “good enough” (R² ≥ 0.6) — else raised exception
+✅ Saved the trained best model as model.pkl inside artifacts/ for future use
+✅ Returned the final R² score (how well the model predicts on unseen data)
+
+📌 Why is this step important?
+✅ Automates the process of testing multiple ML algorithms with hyperparameter tuning
+✅ Ensures only the **best-performing model** is saved (model.pkl) for deployment
+✅ Maintains a reusable pipeline — you can load model.pkl later for predictions without retraining
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>> python -m src.components.model_trainer
+Running this successfully:
+
+GIT STEPS AFTER WRITING A NEW PIPELINE (e.g., model_trainer.py)
+
+1️⃣ Stage all changes (new file, edits, etc.) : git add .
+2️⃣ Commit the changes with a clear message : git commit -m "Added model training pipeline with hyperparameter tuning"
+3️⃣ (Optional) Check status to see what’s pending / ahead : git status    
+4️⃣ Push changes to GitHub (first push uses -u to set upstream) : git push -u origin main

@@ -1,0 +1,9 @@
+[ 2025-08-03 19:03:01,456 ] 32 root - INFO - Entered the data ingestion method.
+[ 2025-08-03 19:03:01,456 ] 38 root - INFO - Reading dataset from: notebook/data/stud.csv
+[ 2025-08-03 19:03:01,468 ] 42 root - INFO - Dataset read successfully with shape (1000, 8)
+[ 2025-08-03 19:03:01,469 ] 47 root - INFO - Artifacts directory created.
+[ 2025-08-03 19:03:01,476 ] 51 root - INFO - Raw data saved at: artifacts\data.csv
+[ 2025-08-03 19:03:01,476 ] 55 root - INFO - Performing train-test split...
+[ 2025-08-03 19:03:01,484 ] 62 root - INFO - Train and test datasets saved.
+[ 2025-08-03 19:03:01,496 ] 71 root - INFO - Categorical columns: ['gender', 'race_ethnicity', 'parental_level_of_education', 'lunch', 'test_preparation_course']
+[ 2025-08-03 19:03:01,497 ] 72 root - INFO - Numerical columns: ['writing_score', 'reading_score']

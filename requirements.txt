@@ -34,6 +34,7 @@ gunicorn
 # =========================
 joblib
 dill
+pickle-mixin     # ✅ Ensures pickle compatibility across environments
 
 # =========================
 # Visualization
